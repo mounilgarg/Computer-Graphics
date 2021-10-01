@@ -1,0 +1,71 @@
+#include<iostream>
+#include<graphics.h>
+#include <conio.h>
+#include<math.h>
+
+using namespace std;
+
+void DDA(int xs,int ys,int xe, int ye)
+{
+	float dx,dy,m,xinc,yinc,xp,yp;
+	int steps;
+	
+	dx=xe-xs;
+	dy=ye-ys;
+	
+	m=dy/dx;
+	
+	if(abs(dx)>=abs(dy))
+		steps=int(dx);
+	else
+		steps=int(dy);
+		
+	if(m<1)
+	{	
+		xinc=1;
+		yinc=m;
+	}
+	else if(m==1)
+	{
+		xinc=yinc=1;
+	}
+	else
+	{
+		xinc=1/m;
+		yinc=1;
+	}	
+	
+	putpixel(xs,ys,7);
+	delay(200);
+	
+	xp=xs;
+	yp=ys;
+	
+	for(int i=0;i<steps;i++)
+	{
+		xp=xinc+xp;
+		yp=yinc+yp;
+		putpixel(round(xp),round(yp),7);
+		delay(200);	
+	}	
+	getch();
+    closegraph();
+}
+
+int main()
+{
+	int gd = DETECT, gm;
+	initgraph(&gd, &gm, (char*)"");
+	
+	float xs,ys,xe,ye;
+	
+	cout<<"Enter initial coordinates:"<<endl;
+	cin>>xs>>ys;
+	
+	cout<<"Enter final coordinates:"<<endl;
+	cin>>xe>>ye;
+	
+	DDA(xs,ys,xe,ye);
+	
+	return 0;
+}
