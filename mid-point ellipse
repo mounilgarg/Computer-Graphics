@@ -1,0 +1,67 @@
+#include<iostream>
+#include<graphics.h>
+#include <conio.h>
+using namespace std;
+
+int main()
+{
+    int gd = DETECT, gm;
+	initgraph(&gd, &gm, (char*)"");
+	
+	cout<<"Enter center co-ordinates:"<<endl;
+	int xc,yc;
+	cin>>xc>>yc;
+	
+	cout<<"Enter semi-major and semi-minor axes:"<<endl;
+	int rx,ry;
+	cin>>rx>>ry;
+	
+	int x=0,y=ry,p=(ry*ry)-(rx*rx*ry)+((rx*rx)/4);
+	
+	while((2*x*ry*ry)<(2*y*rx*rx))
+	{
+		putpixel(xc+x,yc-y,WHITE);
+		putpixel(xc-x,yc-y,WHITE);
+		putpixel(xc+x,yc+y,WHITE);
+		putpixel(xc-x,yc+y,WHITE);
+		
+		if(p<0)
+		{
+			x=x+1;
+			p=p+(2*x*ry*ry)+(ry*ry);
+		}
+		else
+		{
+			x=x+1;
+			y=y-1;
+			p=p+(2*x*ry*ry+ry*ry)-(2*y*rx*rx);
+		}
+	}
+		
+		p=((float)x+0.5)*((float)x+0.5)*ry*ry+(y-1)*(y-1)*rx*rx-rx*rx*ry*ry;
+		
+		while(y>=0)
+		{
+			putpixel(xc+x,yc-y,WHITE);
+			putpixel(xc-x,yc-y,WHITE);
+			putpixel(xc+x,yc+y,WHITE);
+			putpixel(xc-x,yc+y,WHITE);
+			
+			if(p>0)
+			{
+				y=y-1;
+				p=p-(2*y*rx*rx)+(rx*rx);
+			}
+			else
+			{
+				x=x+1;
+				y=y-1;
+				p=p+(2*x*ry*ry)-(2*y*rx*rx)-(rx*rx);
+			}
+		}
+
+    getch();
+    closegraph();
+    
+    return 0;
+}
