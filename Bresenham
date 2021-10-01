@@ -1,0 +1,59 @@
+#include<iostream>
+#include<graphics.h>
+#include <conio.h>
+using namespace std;
+
+void checkPk(int pk, int x, int y, int steps, int count, int dx, int dy)
+{
+	if(count==steps+1)
+		return;
+	else
+	{
+		if(pk<0)
+		{
+			pk=pk+2*dy;
+			x=x+1;	
+		}	
+		else
+		{
+			pk=pk+2*dy-2*dx;
+			x+=1;
+			y+=1;
+		}
+		putpixel(x,y,7);
+		count++;
+		checkPk(pk,x,y,steps,count,dx,dy);
+	}	
+}
+
+void bresenham(int xs, int ys, int xe, int ye)
+{
+	int dx,dy,pk,steps,x=xs,y=ys;
+	dx=xe-xs;
+	dy=ye-ys;
+	steps=dx-1;
+	pk=2*dy-dx;
+	
+	putpixel(x,y,7);
+	checkPk(pk,x,y,steps,0,dx,dy);
+}
+
+int main()
+{
+	int gd = DETECT, gm;
+	initgraph(&gd, &gm, (char*)"");
+	
+	int xs,ys,xe,ye;
+	
+	cout<<"Enter initial points:"<<endl;
+	cin>>xs>>ys;
+	
+	cout<<"Enter final points:"<<endl;
+	cin>>xe>>ye;
+	
+	bresenham(xs,ys,xe,ye);
+	
+	getch();
+    closegraph();
+	return 0;
+}
